@@ -46,6 +46,7 @@ module OsslCryptor
 
     # encrypt value.
     # @param [String] value encrypt value.
+    # @param [boolean] encode_base64 encode base64 flag.
     # @return [String] encrypt result value.
     def encrypt(value, encode_base64=true)
 
@@ -57,7 +58,7 @@ module OsslCryptor
       encrypt_value = ""
       encrypt_value << @cipher.update(value)
       encrypt_value << @cipher.final
-      
+
       # encode base64.
       if encode_base64
         encrypt_value = Base64.encode64(encrypt_value)
@@ -68,6 +69,7 @@ module OsslCryptor
 
     # decrypt value.
     # @param [String] value decrypt value.
+    # @param [boolean] decode_base64 decode base64 flag.
     # @return [String] decrypt result value.
     def decrypt(value, decode_base64=true)
 
@@ -101,7 +103,7 @@ module OsslCryptor
 
     private
 
-    # setup cipher instance.
+    # generate cipher key and iv.
     # @param [String] mode crypt mode.
     # @param [Hash] key_iv key and iv. key_iv[:key] = key, key_iv[:iv] = iv
     # @param [String] pass password, if pass = nil, use CipherGenerator::DEFAULT_PASS

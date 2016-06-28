@@ -32,7 +32,7 @@ gem 'ossl_cryptor'
 cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
 
 # encrypt
-enc_value = cryptor.encrypt(aes_encrypt_value)
+enc_value = cryptor.encrypt("AES encrypt target value.")
 p enc_value
 
 # decrypt

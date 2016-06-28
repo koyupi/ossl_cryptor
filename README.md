@@ -2,7 +2,8 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ossl_cryptor`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+This gem provide crypt process by DES and AES-256-CBC.
+Use openssl lib.
 
 ## Installation
 
@@ -22,7 +23,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You implement the method of the AES-256-CBC as a sample.
+DES can also be run in the same way (only the specified mode is different).
+
+```ruby
+gem 'ossl_cryptor'
+
+cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
+
+# encrypt
+enc_value = cryptor.encrypt(aes_encrypt_value)
+p enc_value
+
+# decrypt
+dec_value = cryptor.decrypt(enc_value)
+p dec_value
+```
 
 ## Development
 
@@ -32,7 +48,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ossl_cryptor. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/h-shigemoto/ossl_cryptor. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License

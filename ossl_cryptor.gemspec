@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["corporation.ore@gmail.com"]
 
   spec.summary       = %q{This gem provide crypt by AES-256-CBC and DES.}
-  spec.description   = %q{This gem provide crypt by AES-256-CBC and DES. Use openssl lib. But now, only DES of properly available.}
+  spec.description   = %q{This gem provide crypt by AES-256-CBC and DES. Use openssl lib.}
   spec.homepage      = "https://github.com/h-shigemoto/ossl_cryptor"
   spec.license       = "MIT"
 

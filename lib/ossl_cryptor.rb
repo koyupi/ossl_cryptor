@@ -31,17 +31,16 @@ module OsslCryptor
       @cipher = CipherGenerator.generate_cipher(mode)
       # set initialize parameter and generate key, iv
       @mode = mode
-      @default_key_iv = key_iv
       @pass = pass.nil? ? CipherGenerator::DEFAULT_PASS : pass
       @salt = salt
       @key_iv_hash = key_iv_hash.nil? ? CipherGenerator::DEFAULT_KEY_IV_HASH : key_iv_hash
-      @key_iv = generate_key_iv(@mode, @default_key_iv, @pass, @salt, @key_iv_hash)
+      @key_iv = key_iv.nil? ? generate_key_iv(@mode, @pass, @salt, @key_iv_hash) : key_iv
     end
 
     # reset cipher instance.
     def reset
       @cipher = CipherGenerator.generate_cipher(@mode)
-      @key_iv = generate_key_iv(@mode, @default_key_iv, @pass, @salt, @key_iv_hash)
+      @key_iv = generate_key_iv(@mode, @pass, @salt, @key_iv_hash) if @key_iv.nil?
     end
 
     # encrypt value.
@@ -105,25 +104,17 @@ module OsslCryptor
 
     # generate cipher key and iv.
     # @param [String] mode crypt mode.
-    # @param [Hash] key_iv key and iv. key_iv[:key] = key, key_iv[:iv] = iv
     # @param [String] pass password, if pass = nil, use CipherGenerator::DEFAULT_PASS
     # @param [String] salt salt data. if salt = nil, use random salt.
     # @param [String] hash use hash algorithm when key and iv generate. if key_iv_hash = nil, use CipherGenerator::DEFAULT_KEY_IV_HASH
     # @return [Hash] key and iv hash.
-    def generate_key_iv(mode, key_iv=nil, pass=nil, salt=nil, hash=nil)
+    def generate_key_iv(mode, pass=nil, salt=nil, hash=nil)
 
-      cipher_key_iv = nil
-
-      # if key_iv = nil, generate key and iv.
-      if key_iv.nil?
-        salt = salt.nil? ? get_default_salt(mode) : salt
-        key_iv_str = OpenSSL::PKCS5.pbkdf2_hmac(pass, salt, 2000, (@cipher.key_len + @cipher.iv_len), hash)
-        key = key_iv_str[0, @cipher.key_len]
-        iv = key_iv_str[@cipher.key_len, @cipher.iv_len]
-        cipher_key_iv = { key: key, iv: iv }
-      else
-        cipher_key_iv = key_iv
-      end
+      salt = salt.nil? ? get_default_salt(mode) : salt
+      key_iv_str = OpenSSL::PKCS5.pbkdf2_hmac(pass, salt, 2000, (@cipher.key_len + @cipher.iv_len), hash)
+      key = key_iv_str[0, @cipher.key_len]
+      iv = key_iv_str[@cipher.key_len, @cipher.iv_len]
+      cipher_key_iv = { key: key, iv: iv }
 
       cipher_key_iv
     end

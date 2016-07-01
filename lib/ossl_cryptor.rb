@@ -1,5 +1,5 @@
 require "ossl_cryptor/version"
-require "ossl_cryptor/cipher_generator"
+require "ossl_cryptor/generator"
 require "base64"
 require "openssl"
 
@@ -28,18 +28,18 @@ module OsslCryptor
       end
 
       # generate cipher instance.
-      @cipher = CipherGenerator.generate_cipher(mode)
+      @cipher = OsslCryptor::Generator.generate_cipher(mode)
       # set initialize parameter and generate key, iv
       @mode = mode
-      @pass = pass.nil? ? CipherGenerator::DEFAULT_PASS : pass
+      @pass = pass.nil? ? OsslCryptor::Generator::DEFAULT_PASS : pass
       @salt = salt
-      @key_iv_hash = key_iv_hash.nil? ? CipherGenerator::DEFAULT_KEY_IV_HASH : key_iv_hash
+      @key_iv_hash = key_iv_hash.nil? ? OsslCryptor::Generator::DEFAULT_KEY_IV_HASH : key_iv_hash
       @key_iv = key_iv.nil? ? generate_key_iv(@mode, @pass, @salt, @key_iv_hash) : key_iv
     end
 
     # reset cipher instance.
     def reset
-      @cipher = CipherGenerator.generate_cipher(@mode)
+      @cipher = OsslCryptor::Generator.generate_cipher(@mode)
       @key_iv = generate_key_iv(@mode, @pass, @salt, @key_iv_hash) if @key_iv.nil?
     end
 
@@ -104,9 +104,9 @@ module OsslCryptor
 
     # generate cipher key and iv.
     # @param [String] mode crypt mode.
-    # @param [String] pass password, if pass = nil, use CipherGenerator::DEFAULT_PASS
+    # @param [String] pass password, if pass = nil, use OsslCryptor::Generator::DEFAULT_PASS
     # @param [String] salt salt data. if salt = nil, use random salt.
-    # @param [String] hash use hash algorithm when key and iv generate. if key_iv_hash = nil, use CipherGenerator::DEFAULT_KEY_IV_HASH
+    # @param [String] hash use hash algorithm when key and iv generate. if key_iv_hash = nil, use OsslCryptor::Generator::DEFAULT_KEY_IV_HASH
     # @return [Hash] key and iv hash.
     def generate_key_iv(mode, pass=nil, salt=nil, hash=nil)
 

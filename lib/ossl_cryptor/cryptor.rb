@@ -18,7 +18,7 @@ module OsslCryptor
 
       # if invalid mode, raise error.
       if (AES != mode) && (DES != mode)
-        raise OpenSSL::Cipher::CipherError "invalid mode : #{mode}"
+        raise OpenSSL::Cipher::CipherError.new("invalid mode : #{mode}")
       end
 
       # generate cipher instance.

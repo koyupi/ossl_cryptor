@@ -142,4 +142,8 @@ describe OsslCryptor::Cryptor do
     cryptor.reset
     expect(true).to be_truthy
   end
+
+  it 'fail test' do
+    expect { cryptor = OsslCryptor::Cryptor.new("SHA1") }.to raise_error(OpenSSL::Cipher::CipherError)
+  end
 end

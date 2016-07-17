@@ -82,6 +82,34 @@ module OsslCryptor
       decrypt_value
     end
 
+    # encrypt value and save to file.
+    # @param [String] file_path save file path.
+    # @param [String] value encrypt value.
+    # @param [boolean] encode_base64 encode base64 flag.
+    # @return [String] encrypt result value.
+    def encrypt_to_file(file_path, value, encode_base64=true)
+
+      # encrypt value.
+      enc_value = encrypt(value, encode_base64)
+
+      # save file.
+      File.write(file_path, enc_value)
+      enc_value
+    end
+
+    # decrypt value from file.
+    # @param [String] file_path save file path.
+    # @param [boolean] decode_base64 decode base64 flag.
+    # @return [String] decrypt result value.
+    def decrypt_from_file(file_path, decode_base64=true)
+
+      # read from file.
+      enc_value = File.read(file_path)
+
+      dec_value = decrypt(enc_value, decode_base64)
+      dec_value
+    end
+
     # get crypt mode.
     # @return [String] mode
     def mode

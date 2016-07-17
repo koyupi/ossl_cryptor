@@ -4,6 +4,7 @@ describe OsslCryptor::Cryptor do
 
   let(:aes_encrypt_value) { "AES encrypt value" }
   let(:des_encrypt_value) { "DES encrypt value" }
+  let(:encrypt_file_path) { 'C:\GitHub\enc.txt' }
 
   it 'AES test all nil' do
     cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
@@ -145,5 +146,23 @@ describe OsslCryptor::Cryptor do
 
   it 'fail test' do
     expect { cryptor = OsslCryptor::Cryptor.new("SHA1") }.to raise_error(OpenSSL::Cipher::CipherError)
+  end
+
+  it 'encrypt to file test' do
+    cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
+    enc_value = cryptor.encrypt_to_file(encrypt_file_path, aes_encrypt_value)
+    file_value = File.read(encrypt_file_path)
+    # puts file_value
+    File.delete(encrypt_file_path)
+    expect(enc_value).to eq file_value
+  end
+
+  it 'decrypt from file test' do
+    cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
+    cryptor.encrypt_to_file(encrypt_file_path, aes_encrypt_value)
+    dec_value = cryptor.decrypt_from_file(encrypt_file_path)
+    # puts dec_value
+    File.delete(encrypt_file_path)
+    expect(dec_value).to eq aes_encrypt_value
   end
 end

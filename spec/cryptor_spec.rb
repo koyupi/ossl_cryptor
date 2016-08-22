@@ -165,4 +165,17 @@ describe OsslCryptor::Cryptor do
     File.delete(encrypt_file_path)
     expect(dec_value).to eq aes_encrypt_value
   end
+
+  it 'RFC4648 crypt test' do
+
+    cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES)
+    cryptor.set_rfc(OsslCryptor::RFC4648)
+    enc_value = cryptor.encrypt(aes_encrypt_value)
+    # puts enc_value
+    expect(enc_value).not_to eq aes_encrypt_value
+
+    dec_value = cryptor.decrypt(enc_value)
+    # puts dec_value
+    expect(dec_value).to eq aes_encrypt_value
+  end
 end

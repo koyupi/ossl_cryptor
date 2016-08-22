@@ -12,6 +12,11 @@ module OsslCryptor
   # AES Mode.
   AES = "AES-256-CBC"
 
+  # RFC2045
+  RFC2045 = 0
+  # RFC4648
+  RFC4648 = 1
+
   # @return [String] availabe cipher.
   def self.available
     "#{AES}, #{DES}"

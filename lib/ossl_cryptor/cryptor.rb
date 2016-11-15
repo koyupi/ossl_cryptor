@@ -17,7 +17,7 @@ module OsslCryptor
     def initialize(mode, key_iv=nil, pass=nil, salt=nil, key_iv_hash=nil)
 
       # if invalid mode, raise error.
-      if (AES != mode) && (DES != mode)
+      if (AES_128 != mode) && (AES_256 != mode) && (DES != mode)
         raise OpenSSL::Cipher::CipherError.new("invalid mode : #{mode}")
       end
 
@@ -154,7 +154,7 @@ module OsslCryptor
 
       default_salt = nil
 
-      if mode == AES
+      if (mode == AES_128) || (mode == AES_256)
         default_salt = OpenSSL::Random.random_bytes(8)
       elsif mode == DES
         default_salt = OpenSSL::Random.random_bytes(2)

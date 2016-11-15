@@ -8,6 +8,6 @@ describe OsslCryptor do
 
   it 'available test' do
     available = OsslCryptor.available
-    expect(available).to eq "#{OsslCryptor::AES}, #{OsslCryptor::DES}"
+    expect(available).to eq "#{OsslCryptor::AES_128}, #{OsslCryptor::AES_256}, #{OsslCryptor::DES}"
   end
 end

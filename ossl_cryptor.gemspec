@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["h.shigemoto"]
   spec.email         = ["corporation.ore@gmail.com"]
 
-  spec.summary       = %q{This gem provide crypt by AES-256-CBC and DES.}
-  spec.description   = %q{This gem provide crypt by AES-256-CBC and DES. Use openssl lib.}
+  spec.summary       = %q{This gem provide crypt by AES-128-CBC, AES-256-CBC and DES.}
+  spec.description   = %q{This gem provide crypt by AES-128-CBC, AES-256-CBC and DES. Use openssl lib.}
   spec.homepage      = "https://github.com/koyupi/ossl_cryptor"
   spec.license       = "MIT"
 

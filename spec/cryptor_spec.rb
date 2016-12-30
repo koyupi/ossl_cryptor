@@ -15,11 +15,11 @@ describe OsslCryptor::Cryptor do
   it 'AES-128-CBC test all nil' do
     cryptor = OsslCryptor::Cryptor.new(OsslCryptor::AES_128)
     enc_value = cryptor.encrypt(aes_encrypt_value)
-     puts enc_value
+    # puts enc_value
     expect(enc_value).not_to eq aes_encrypt_value
 
     dec_value = cryptor.decrypt(enc_value)
-     puts dec_value
+    # puts dec_value
     expect(dec_value).to eq aes_encrypt_value
   end
 
